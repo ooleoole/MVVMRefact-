@@ -1,0 +1,10 @@
+﻿<UserControl x:Class="PointManager.Views.PointNavigationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:viewmodels="clr-namespace:PointManager.ViewModels"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--<Grid Width="300" Height="30" Background="Yellow" />-->
+    <DataGrid ItemsSource="{Binding CameraPositions}" />
+    <UserControl.DataContext>
+        <viewmodels:PointNavigationViewModel />
+    </UserControl.DataContext>
+</UserControl>
