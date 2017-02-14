@@ -13,6 +13,7 @@ using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PointManager;
+using PointManager.ViewModels;
 using Camera = PointManager.Camera;
 
 namespace PointManager.Views
@@ -22,10 +23,11 @@ namespace PointManager.Views
     /// </summary>
     public partial class World3DView : UserControl
     {
+
         public World3DView()
         {
             InitializeComponent();
-            
+
 
         }
 
@@ -37,18 +39,21 @@ namespace PointManager.Views
         System.Windows.Threading.DispatcherTimer timer;
         MoveMent Walk, Strafe;
         double Steps = 1;
-        Camera cameraPosition;
+        Camera _cameraPosition;
 
         private void PrintCameraData()
         {
-            XtextBox.Text = (Math.Round(cameraPosition.X, 2)).ToString();
-            YtextBox.Text = (Math.Round(cameraPosition.Y, 2)).ToString();
-            ZtextBox.Text = (Math.Round(cameraPosition.Z, 2)).ToString();
-            VtextBox.Text = (Math.Round(cameraPosition.DegreeVertical, 2)).ToString();
-            HtextBox.Text = (Math.Round(cameraPosition.DegreeHorizontal, 2)).ToString();
+
+            var world3DViewModel = (World3DViewModel)DataContext;
+
+            world3DViewModel.World3DModel.XCameraPosition = (Math.Round(_cameraPosition.X, 2)).ToString();
+            world3DViewModel.World3DModel.YCameraPosition = (Math.Round(_cameraPosition.Y, 2)).ToString();
+            world3DViewModel.World3DModel.ZCameraPosition = (Math.Round(_cameraPosition.Z, 2)).ToString();
+            world3DViewModel.World3DModel.VCameraDirection = (Math.Round(_cameraPosition.DegreeVertical, 2)).ToString();
+            world3DViewModel.World3DModel.HCameraDirection = (Math.Round(_cameraPosition.DegreeHorizontal, 2)).ToString();
         }
 
-        private void Window1_KeyDown(object sender, KeyEventArgs e)
+        public void Window1_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
@@ -56,12 +61,12 @@ namespace PointManager.Views
                 case Key.Down: Walk = MoveMent.Negative; break;
                 case Key.Left: Strafe = MoveMent.Negative; break;
                 case Key.Right: Strafe = MoveMent.Positive; break;
-                case Key.Z: cameraPosition.Y += 0.1; break;
-                case Key.X: cameraPosition.Y -= 0.1; break;
+                case Key.Z: _cameraPosition.Y += 0.1; break;
+                case Key.X: _cameraPosition.Y -= 0.1; break;
             }
         }
 
-        private void Window1_KeyUp(object sender, KeyEventArgs e)
+        public void Window1_KeyUp(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
@@ -74,19 +79,19 @@ namespace PointManager.Views
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (Walk != MoveMent.None) cameraPosition.Move((double)Walk * Steps * 0.1);
-            if (Strafe != MoveMent.None) cameraPosition.Strafe((double)Strafe * Steps * 0.1);
-            newPerspectivCamera.Position = cameraPosition.Position;
-            newPerspectivCamera.LookDirection = new Vector3D(cameraPosition.Look.X, cameraPosition.Look.Y, cameraPosition.Look.Z);
+            if (Walk != MoveMent.None) _cameraPosition.Move((double)Walk * Steps * 0.1);
+            if (Strafe != MoveMent.None) _cameraPosition.Strafe((double)Strafe * Steps * 0.1);
+            newPerspectivCamera.Position = _cameraPosition.Position;
+            newPerspectivCamera.LookDirection = new Vector3D(_cameraPosition.Look.X, _cameraPosition.Look.Y, _cameraPosition.Look.Z);
             PrintCameraData();
         }
 
         private void Window1_Loaded(object sender, RoutedEventArgs e)
         {
-            Viewport3D1.Camera = newPerspectivCamera;
-            cameraPosition = new Camera() { X = 1, Y = 0.5, Z = 0 }; //CamPos.degH = CamPos.degV =0;
-            newPerspectivCamera.Position = cameraPosition.Position;
-            newPerspectivCamera.LookDirection = new Vector3D(cameraPosition.Look.X, cameraPosition.Look.Y, cameraPosition.Look.Z);
+            //Viewport3D1.Camera = newPerspectivCamera;
+            _cameraPosition = new Camera() { X = 1, Y = 0.5, Z = 0 }; //CamPos.degH = CamPos.degV =0;
+            newPerspectivCamera.Position = _cameraPosition.Position;
+            newPerspectivCamera.LookDirection = new Vector3D(_cameraPosition.Look.X, _cameraPosition.Look.Y, _cameraPosition.Look.Z);
             (new MazeGenerator()).MakeMaze(m3Dg);
             timer = new System.Windows.Threading.DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(16);
@@ -101,21 +106,22 @@ namespace PointManager.Views
             if (point.Y > middle)
             {
                 var proc = (point.Y - middle) / middle;
-                cameraPosition.DegreeVertical = 360 - 90 * proc;
+                _cameraPosition.DegreeVertical = 360 - 90 * proc;
             }
             // Vert: up:  0-90
             if (point.Y < middle)
             {
                 var proc = point.Y / middle;
-                cameraPosition.DegreeVertical = 90 - 90 * proc;
+                _cameraPosition.DegreeVertical = 90 - 90 * proc;
             }
             var proc2 = point.X / this.ActualWidth;
-            cameraPosition.DegreeHorizontal = 720 - 720 * proc2;
+            _cameraPosition.DegreeHorizontal = 720 - 720 * proc2;
         }
 
         private void Window1_MouseMove(object sender, MouseEventArgs e)
         {
             SetCameraAngles(e.GetPosition(null));
+
         }
     }
 }

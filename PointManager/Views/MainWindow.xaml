@@ -4,10 +4,11 @@
         xmlns:UC="clr-namespace:PointManager.Views"
         xmlns:viewmodels="clr-namespace:PointManager.ViewModels"
 		Title="MainWindow" Height="350" Width="525"
+        KeyDown="MainWindow_KeyDown" KeyUp="MainWindow_KeyUp" 
         WindowState="Maximized">
     <Window.Resources>
         <viewmodels:MainViewModel x:Key="MVM" />
-        <viewmodels:World3DViewModel x:Key="World3DViewModel"/>
+      <viewmodels:World3DViewModel x:Key="World3DViewModel"/>
     </Window.Resources>
     
     <StackPanel x:Name="LayoutRoot" DataContext="{StaticResource MVM}" MinHeight="300" MinWidth="300" >
@@ -34,7 +35,7 @@
         <TextBox Text="{Binding ModelCameraPosition.cameraDegV}" />
 
         <Button Content="Save"  Command="{Binding SCPC}" />
-        <UC:World3DView DataContext="{StaticResource World3DViewModel}"/>
+        <UC:World3DView x:Name="UCworld3DView" DataContext="{StaticResource World3DViewModel}"/>
     </StackPanel>
     
 </Window>

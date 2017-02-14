@@ -2,48 +2,59 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:PointManager.Views"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:PointManager.ViewModels"
+             xmlns:pointManager="clr-namespace:PointManager"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" 
-             KeyDown="Window1_KeyDown" KeyUp="Window1_KeyUp" Loaded="Window1_Loaded" MouseMove="Window1_MouseMove"
+             Loaded="Window1_Loaded"   MouseMove="Window1_MouseMove"
              d:DesignHeight="300" d:DesignWidth="300"
-             MaxHeight="800"
-             MinHeight="800">
-    <Grid>
-        <Viewport3D  Name="Viewport3D1" Margin="0,0,0,0">
-            <Viewport3D.Camera>
+             Height="{Binding World3DModel.ActualWorldHeight, Mode=TwoWay}"
+             Width="{Binding World3DModel.ActuaWorldWidth, Mode=TwoWay}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Loaded}"></i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+
+    <Grid DataContext="{Binding World3DModel}">
+        <Viewport3D  Name="Viewport3D1" Margin="0,0,0,0"
+                     Camera="{Binding Camera}">
+            <!--<Viewport3D.Camera>
                 <PerspectiveCamera Position="0,0,0" LookDirection="0,0,0 " UpDirection="0,0,1" />
-            </Viewport3D.Camera>
+            </Viewport3D.Camera>-->
             <ModelVisual3D>
                 <ModelVisual3D.Content>
-                    <Model3DGroup x:Name="m3Dg">
-                        <AmbientLight Color="Gray"/>
+                    <Model3DGroup x:Name="m3Dg"
+                                  Children="{Binding Model3DGroup.Children, Mode=TwoWay}">
+                        <!--<AmbientLight Color="Gray"/>
                         <DirectionalLight Color="Gray" Direction="-1,0,0"/>
-                        <DirectionalLight Color="Gray" Direction="1,0,1"/>
+                        <DirectionalLight Color="Gray" Direction="1,0,1"/>-->
                     </Model3DGroup>
                 </ModelVisual3D.Content>
             </ModelVisual3D>
         </Viewport3D>
-        <StackPanel Orientation="Horizontal" >
+        <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="X" />
-                <TextBox x:Name="XtextBox" Width="70" IsEnabled="False" />
+                <TextBox x:Name="XCameraPositionT" Text="{Binding XCameraPosition ,Mode=TwoWay}" Width="70" IsEnabled="False"/>
             </StackPanel>
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="Y" />
-                <TextBox x:Name="YtextBox" Width="70" IsEnabled="False" />
+                <TextBox x:Name="YtextBox" Text="{Binding YCameraPosition ,Mode=TwoWay}" Width="70" IsEnabled="False" />
             </StackPanel>
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="Z"  />
-                <TextBox x:Name="ZtextBox" Width="70" IsEnabled="False" />
+                <TextBox x:Name="ZtextBox" Text="{Binding ZCameraPosition ,Mode=TwoWay}" Width="70" IsEnabled="False" />
             </StackPanel>
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="Vertical"  />
-                <TextBox x:Name="VtextBox" Width="70" IsEnabled="False" />
+                <TextBox x:Name="VtextBox" Width="70" Text="{Binding VCameraDirection,Mode=TwoWay}" IsEnabled="False" />
             </StackPanel>
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="Horizontal"  />
-                <TextBox x:Name="HtextBox" Width="70" IsEnabled="False" />
+                <TextBox x:Name="HtextBox" Width="70" Text="{Binding HCameraDirection ,Mode=TwoWay}" IsEnabled="False" />
             </StackPanel>
         </StackPanel>
     </Grid>
