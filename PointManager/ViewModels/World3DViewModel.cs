@@ -17,13 +17,15 @@ namespace PointManager.ViewModels
 {
     public class World3DViewModel : ViewModelBase
     {
-        private enum MoveMent
+        public enum MoveMent
         {
             Negative = -1, None = 0, Positive = 1,
         }
-        private Camera _cameraPostition;
+        
+
+        public Camera CameraPostition;
         private const double Steps = 1;
-        private MoveMent _walk, _strafe;
+        public MoveMent Walk, Strafe;
         private PerspectiveCamera _newPerspectivCamera = new PerspectiveCamera();
         private System.Windows.Threading.DispatcherTimer _timer;
 
@@ -64,11 +66,11 @@ namespace PointManager.ViewModels
         private void PrintCameraData()
         {
 
-            World3DModel.XCameraPosition = (Math.Round(_cameraPostition.X, 2)).ToString();
-            World3DModel.YCameraPosition = (Math.Round(_cameraPostition.Y, 2)).ToString();
-            World3DModel.ZCameraPosition = (Math.Round(_cameraPostition.Z, 2)).ToString();
-            World3DModel.VCameraDirection = (Math.Round(_cameraPostition.DegreeVertical, 2)).ToString();
-            World3DModel.HCameraDirection = (Math.Round(_cameraPostition.DegreeHorizontal, 2)).ToString();
+            World3DModel.XCameraPosition = (Math.Round(CameraPostition.X, 2)).ToString();
+            World3DModel.YCameraPosition = (Math.Round(CameraPostition.Y, 2)).ToString();
+            World3DModel.ZCameraPosition = (Math.Round(CameraPostition.Z, 2)).ToString();
+            World3DModel.VCameraDirection = (Math.Round(CameraPostition.DegreeVertical, 2)).ToString();
+            World3DModel.HCameraDirection = (Math.Round(CameraPostition.DegreeHorizontal, 2)).ToString();
         }
 
         //private void Window1_KeyDown(object sender, KeyEventArgs e)
@@ -97,19 +99,19 @@ namespace PointManager.ViewModels
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (_walk != MoveMent.None) _cameraPostition.Move((double)_walk * Steps * 0.1);
-            if (_strafe != MoveMent.None) _cameraPostition.Strafe((double)_strafe * Steps * 0.1);
-            _newPerspectivCamera.Position = _cameraPostition.Position;
-            _newPerspectivCamera.LookDirection = new Vector3D(_cameraPostition.Look.X, _cameraPostition.Look.Y, _cameraPostition.Look.Z);
+            if (Walk != MoveMent.None) CameraPostition.Move((double)Walk * Steps * 0.1);
+            if (Strafe != MoveMent.None) CameraPostition.Strafe((double)Strafe * Steps * 0.1);
+            _newPerspectivCamera.Position = CameraPostition.Position;
+            _newPerspectivCamera.LookDirection = new Vector3D(CameraPostition.Look.X, CameraPostition.Look.Y, CameraPostition.Look.Z);
             PrintCameraData();
         }
 
         private void Window1_Loaded()
         {
             World3DModel.Camera = _newPerspectivCamera;
-            _cameraPostition = new Camera() { X = 1, Y = 0.5, Z = 0 }; //CamPos.degH = CamPos.degV =0;
-            _newPerspectivCamera.Position = _cameraPostition.Position;
-            _newPerspectivCamera.LookDirection = new Vector3D(_cameraPostition.Look.X, _cameraPostition.Look.Y, _cameraPostition.Look.Z);
+            CameraPostition = new Camera() { X = 1, Y = 0.5, Z = 0 }; //CamPos.degH = CamPos.degV =0;
+            World3DModel.Camera.Position = CameraPostition.Position;
+            _newPerspectivCamera.LookDirection = new Vector3D(CameraPostition.Look.X, CameraPostition.Look.Y, CameraPostition.Look.Z);
             (new MazeGenerator()).MakeMaze(World3DModel.Model3DGroup);
             _timer = new System.Windows.Threading.DispatcherTimer();
             _timer.Interval = TimeSpan.FromMilliseconds(16);
@@ -126,16 +128,16 @@ namespace PointManager.ViewModels
             if (point.Y > middle)
             {
                 var proc = (point.Y - middle) / middle;
-                _cameraPostition.DegreeVertical = 360 - 90 * proc;
+                CameraPostition.DegreeVertical = 360 - 90 * proc;
             }
             // Vert: up:  0-90
             if (point.Y < middle)
             {
                 var proc = point.Y / middle;
-                _cameraPostition.DegreeVertical = 90 - 90 * proc;
+                CameraPostition.DegreeVertical = 90 - 90 * proc;
             }
             var proc2 = point.X / this.World3DModel.ActuaWorldWidth;
-            _cameraPostition.DegreeHorizontal = 720 - 720 * proc2;
+            CameraPostition.DegreeHorizontal = 720 - 720 * proc2;
         }
 
 
