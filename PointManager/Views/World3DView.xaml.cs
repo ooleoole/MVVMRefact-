@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using PointManager;
 using PointManager.ViewModels;
-using Camera = PointManager.Camera;
 
 namespace PointManager.Views
 {
@@ -55,6 +42,7 @@ namespace PointManager.Views
 
         public void Window1_KeyDown(object sender, KeyEventArgs e)
         {
+            _world3DViewModel = (World3DViewModel)DataContext;
             switch (e.Key)
             {
                 case Key.Up: _world3DViewModel.Walk = World3DViewModel.MoveMent.Positive; break;
@@ -68,6 +56,7 @@ namespace PointManager.Views
 
         public void Window1_KeyUp(object sender, KeyEventArgs e)
         {
+            _world3DViewModel = (World3DViewModel)DataContext;
             switch (e.Key)
             {
                 case Key.Up: _world3DViewModel.Walk = World3DViewModel.MoveMent.None; break;

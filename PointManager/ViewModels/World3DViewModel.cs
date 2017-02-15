@@ -21,7 +21,7 @@ namespace PointManager.ViewModels
         {
             Negative = -1, None = 0, Positive = 1,
         }
-        
+
 
         public Camera CameraPostition;
         private const double Steps = 1;
@@ -36,7 +36,6 @@ namespace PointManager.ViewModels
             get
             {
                 return _loaded;
-
             }
             set
             {
@@ -51,14 +50,34 @@ namespace PointManager.ViewModels
 
         public World3DViewModel()
         {
-            World3DModel = new World3DModel { ActualWorldHeight = 800, ActuaWorldWidth = 1200 };
+            SetScreenSize();
             InitializeCommands();
             //World3DModel.Viewport3D1 = new Viewport3D();
-            World3DModel.Model3DGroup = new Model3DGroup();
-            World3DModel.Model3DGroup.Children.Add(new AmbientLight() { Color = Color.FromRgb(128, 128, 128) });
-            World3DModel.Model3DGroup.Children.Add(new DirectionalLight() { Color = Color.FromRgb(128, 128, 128), Direction = new Vector3D(-1.0, 0, 1.0) });
-            World3DModel.Model3DGroup.Children.Add(new DirectionalLight() { Color = Color.FromRgb(128, 128, 128), Direction = new Vector3D(1.0, 0, 1.0) });
+            CreateModel3DGroup();
         }
+
+        private void SetScreenSize()
+        {
+            var maxScreenWidth = SystemParameters.PrimaryScreenWidth;
+            World3DModel = new World3DModel {ActualWorldHeight = 800, ActuaWorldWidth = maxScreenWidth - 300};
+        }
+
+        private void CreateModel3DGroup()
+        {
+            World3DModel.Model3DGroup = new Model3DGroup();
+            World3DModel.Model3DGroup.Children.Add(new AmbientLight() {Color = Color.FromRgb(128, 128, 128)});
+            World3DModel.Model3DGroup.Children.Add(new DirectionalLight()
+            {
+                Color = Color.FromRgb(128, 128, 128),
+                Direction = new Vector3D(-1.0, 0, 1.0)
+            });
+            World3DModel.Model3DGroup.Children.Add(new DirectionalLight()
+            {
+                Color = Color.FromRgb(128, 128, 128),
+                Direction = new Vector3D(1.0, 0, 1.0)
+            });
+        }
+
         private void InitializeCommands()
         {
             Loaded = new SaveCameraPositionCommand(Window1_Loaded);
