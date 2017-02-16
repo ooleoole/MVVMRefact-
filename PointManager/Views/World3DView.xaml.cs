@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using PointManager.ViewModels;
+using PointManager.VML;
 
 namespace PointManager.Views
 {
@@ -11,11 +12,12 @@ namespace PointManager.Views
     public partial class World3DView : UserControl
     {
         private World3DViewModel _world3DViewModel;
-
+       
         public World3DView()
         {
             InitializeComponent();
-            _world3DViewModel = (World3DViewModel)DataContext;
+            //_world3DViewModel = (World3DViewModel)DataContext;
+            
         }
 
         //enum MoveMent
@@ -42,7 +44,7 @@ namespace PointManager.Views
 
         public void Window1_KeyDown(object sender, KeyEventArgs e)
         {
-            _world3DViewModel = (World3DViewModel)DataContext;
+            _world3DViewModel = ViewModelLocator.World3DViewModel;
             switch (e.Key)
             {
                 case Key.Up: _world3DViewModel.Walk = World3DViewModel.MoveMent.Positive; break;
@@ -56,7 +58,7 @@ namespace PointManager.Views
 
         public void Window1_KeyUp(object sender, KeyEventArgs e)
         {
-            _world3DViewModel = (World3DViewModel)DataContext;
+            _world3DViewModel = ViewModelLocator.World3DViewModel;
             switch (e.Key)
             {
                 case Key.Up: _world3DViewModel.Walk = World3DViewModel.MoveMent.None; break;
@@ -93,7 +95,7 @@ namespace PointManager.Views
 
         private void SetCameraAngles(Point point)
         {
-            _world3DViewModel = (World3DViewModel)DataContext;
+            _world3DViewModel = ViewModelLocator.World3DViewModel; 
             var middle = this.ActualHeight / 2;
             // ned:  360-270.
             if (point.Y > middle)
