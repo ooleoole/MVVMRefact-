@@ -14,14 +14,10 @@ namespace PointManager
             _world3DView = UCworld3DView;
         }
 
-        public void MainWindow_KeyDown(object sender, KeyEventArgs e)
+        private void RouteEventToWorld3DView(object sender, RoutedEventArgs e)
         {
-            _world3DView.Window1_KeyDown(sender, e);
+            _world3DView.EventRouter(sender, e);
         }
-
-        public void MainWindow_KeyUp(object sender, KeyEventArgs e)
-        {
-            _world3DView.Window1_KeyUp(sender, e);
-        }
+        
     }
 }

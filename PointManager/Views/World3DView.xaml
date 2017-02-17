@@ -8,7 +8,7 @@
              xmlns:pointManager="clr-namespace:PointManager"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" 
-             MouseMove="Window1_MouseMove"
+             MouseMove="EventRouter"
              d:DesignHeight="300" d:DesignWidth="300"
              Height="{Binding World3DModel.ActualWorldHeight, Mode=TwoWay}"
              Width="{Binding World3DModel.ActuaWorldWidth, Mode=TwoWay}">

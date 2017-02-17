@@ -4,7 +4,7 @@
         xmlns:UC="clr-namespace:PointManager.Views"
         xmlns:viewmodels="clr-namespace:PointManager.ViewModels"
 		Title="MainWindow" Height="350" Width="525"
-        KeyDown="MainWindow_KeyDown" KeyUp="MainWindow_KeyUp" 
+        KeyDown="RouteEventToWorld3DView" KeyUp="RouteEventToWorld3DView" 
         WindowState="Maximized">
     <Window.Resources>
         <viewmodels:MainViewModel x:Key="MVM" />

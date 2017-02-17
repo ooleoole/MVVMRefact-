@@ -10,6 +10,7 @@ namespace PointManager.VML
     public class ViewModelLocator
     {
         private static World3DViewModel _world3DViewModel;
+
         public static World3DViewModel World3DViewModel => _world3DViewModel;
 
         static ViewModelLocator()

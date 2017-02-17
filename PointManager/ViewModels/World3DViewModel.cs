@@ -92,29 +92,29 @@ namespace PointManager.ViewModels
             World3DModel.HCameraDirection = (Math.Round(CameraPostition.DegreeHorizontal, 2)).ToString();
         }
 
-        //private void Window1_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    switch (e.Key)
-        //    {
-        //        case Key.Up: _walk = MoveMent.Positive; break;
-        //        case Key.Down: _walk = MoveMent.Negative; break;
-        //        case Key.Left: _strafe = MoveMent.Negative; break;
-        //        case Key.Right: _strafe = MoveMent.Positive; break;
-        //        case Key.Z: _cameraPostition.Y += 0.1; break;
-        //        case Key.X: _cameraPostition.Y -= 0.1; break;
-        //    }
-        //}
+        public void KeyDownTarget(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Up: Walk = MoveMent.Positive; break;
+                case Key.Down: Walk = MoveMent.Negative; break;
+                case Key.Left: Strafe = MoveMent.Negative; break;
+                case Key.Right: Strafe = MoveMent.Positive; break;
+                case Key.Z: CameraPostition.Y += 0.1; break;
+                case Key.X: CameraPostition.Y -= 0.1; break;
+            }
+        }
 
-        //private void Window1_KeyUp(object sender, KeyEventArgs e)
-        //{
-        //    switch (e.Key)
-        //    {
-        //        case Key.Up: _walk = MoveMent.None; break;
-        //        case Key.Down: _walk = _walk = MoveMent.None; break;
-        //        case Key.Left: _strafe = MoveMent.None; break;
-        //        case Key.Right: _strafe = MoveMent.None; break;
-        //    }
-        //}
+        public void KeyUpTarget(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Up: Walk = MoveMent.None; break;
+                case Key.Down: Walk = Walk = MoveMent.None; break;
+                case Key.Left: Strafe = MoveMent.None; break;
+                case Key.Right: Strafe = MoveMent.None; break;
+            }
+        }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -161,7 +161,7 @@ namespace PointManager.ViewModels
 
 
 
-        private void Window1_MouseMove(object sender, MouseEventArgs e)
+        public void MouseMoveTarget(object sender, MouseEventArgs e)
         {
             SetCameraAngles(e.GetPosition(null));
         }
