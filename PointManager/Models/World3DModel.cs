@@ -12,7 +12,6 @@ namespace PointManager.Models
         private string _zCameraPosition;
         private string _vCameraDirection;
         private string _hCameraDirection;
-        private Viewport3D _viewport3D;
         private Model3DGroup _model3DGroup;
         private PerspectiveCamera _camera;
 
@@ -32,7 +31,6 @@ namespace PointManager.Models
             }
         }
 
-        public Viewport3D Viewport3D1 { get; set; }
 
         public PerspectiveCamera Camera
         {

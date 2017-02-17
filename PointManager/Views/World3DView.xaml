@@ -8,7 +8,7 @@
              xmlns:pointManager="clr-namespace:PointManager"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" 
-             MouseMove="EventRouter"
+             MouseMove="EventRouter" Loaded="EventRouter"
              d:DesignHeight="300" d:DesignWidth="300"
              Height="{Binding World3DModel.ActualWorldHeight, Mode=TwoWay}"
              Width="{Binding World3DModel.ActuaWorldWidth, Mode=TwoWay}">
@@ -20,16 +20,6 @@
     <UserControl.DataContext>
         <Binding Source="{StaticResource ViewModelLocator}" Path="World3DViewModel"/>
     </UserControl.DataContext>
-
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding Loaded, Mode=TwoWay}"/>
-        </i:EventTrigger>
-        <!--<i:EventTrigger EventName="MouseMove">
-           --><!--<i:InvokeCommandAction CommandParameter="{Binding MouseMoveEvent}"></i:InvokeCommandAction>--><!--
-        </i:EventTrigger>-->
-    </i:Interaction.Triggers>
-    
 
         <Grid DataContext="{Binding World3DModel}">
         <Viewport3D  Name="Viewport3D1" Margin="0,0,0,0"

@@ -22,21 +22,7 @@ namespace PointManager.ViewModels
         private PerspectiveCamera _newPerspectivCamera = new PerspectiveCamera();
         private System.Windows.Threading.DispatcherTimer _timer;
 
-        private ICommand _loaded;
-
-        public ICommand Loaded
-        {
-            get
-            {
-                return _loaded;
-            }
-            set
-            {
-                _loaded = value;
-                OnPropertyChanged("Loaded");
-            }
-        }
-
+       
         public World3DModel World3DModel { get; set; }
 
 
@@ -44,7 +30,6 @@ namespace PointManager.ViewModels
         public World3DViewModel()
         {
             SetScreenSize();
-            InitializeCommands();
             CreateModel3DGroup();
         }
 
@@ -70,10 +55,7 @@ namespace PointManager.ViewModels
             });
         }
 
-        private void InitializeCommands()
-        {
-            Loaded = new SaveCameraPositionCommand(Window1_Loaded);
-        }
+        
         private void PrintCameraData()
         {
 
@@ -117,7 +99,7 @@ namespace PointManager.ViewModels
             PrintCameraData();
         }
 
-        private void Window1_Loaded()
+        public void LoadedTarget(object sender, RoutedEventArgs e)
         {
             World3DModel.Camera = _newPerspectivCamera;
             _cameraPostition = new Camera() { X = 1, Y = 0.5, Z = 0 }; //CamPos.degH = CamPos.degV =0;

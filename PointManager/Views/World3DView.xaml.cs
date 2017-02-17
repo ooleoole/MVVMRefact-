@@ -18,6 +18,7 @@ namespace PointManager.Views
         {
             var eventRaiserName = e.RoutedEvent.Name;
             var viewModelType = DataContext.GetType();
+            var met = viewModelType.GetMethods();
             var targetMehtod = viewModelType.GetMethod(eventRaiserName + "Target");
             targetMehtod.Invoke(DataContext, new[] { sender, e });
         }
