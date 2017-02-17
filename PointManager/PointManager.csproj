@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Interfaces\IViewToViewModelEventRouter.cs" />
     <Compile Include="Models\World3DModel.cs" />
     <Compile Include="Temp\Camera.cs" />
     <Compile Include="Temp\MainWindow.xaml.cs" />
