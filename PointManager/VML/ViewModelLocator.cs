@@ -9,13 +9,11 @@ namespace PointManager.VML
 {
     public class ViewModelLocator
     {
-        private static World3DViewModel _world3DViewModel;
-
-        public static World3DViewModel World3DViewModel => _world3DViewModel;
+        public static World3DViewModel World3DViewModel { get; }
 
         static ViewModelLocator()
         {
-           _world3DViewModel = new World3DViewModel();
+           World3DViewModel = new World3DViewModel();
         }
     }
 }

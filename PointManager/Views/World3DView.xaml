@@ -4,40 +4,33 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:vml="clr-namespace:PointManager.VML"
-             xmlns:viewModels="clr-namespace:PointManager.ViewModels"
-             xmlns:pointManager="clr-namespace:PointManager"
-             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" 
              MouseMove="EventRouter" Loaded="EventRouter"
              d:DesignHeight="300" d:DesignWidth="300"
              Height="{Binding World3DModel.ActualWorldHeight, Mode=TwoWay}"
              Width="{Binding World3DModel.ActuaWorldWidth, Mode=TwoWay}">
-    
+
     <UserControl.Resources>
         <vml:ViewModelLocator x:Key="ViewModelLocator" />
     </UserControl.Resources>
-    
+
     <UserControl.DataContext>
         <Binding Source="{StaticResource ViewModelLocator}" Path="World3DViewModel"/>
     </UserControl.DataContext>
 
-        <Grid DataContext="{Binding World3DModel}">
-        <Viewport3D  Name="Viewport3D1" Margin="0,0,0,0"
+    <Grid DataContext="{Binding World3DModel}">
+       
+        <Viewport3D x:Name="Viewport3D1" Margin="0,0,0,0"
                      Camera="{Binding Camera}">
-            <!--<Viewport3D.Camera>
-                <PerspectiveCamera Position="0,0,0" LookDirection="0,0,0 " UpDirection="0,0,1" />
-            </Viewport3D.Camera>-->
             <ModelVisual3D>
                 <ModelVisual3D.Content>
                     <Model3DGroup x:Name="m3Dg"
                                   Children="{Binding Model3DGroup.Children, Mode=TwoWay}">
-                        <!--<AmbientLight Color="Gray"/>
-                        <DirectionalLight Color="Gray" Direction="-1,0,0"/>
-                        <DirectionalLight Color="Gray" Direction="1,0,1"/>-->
                     </Model3DGroup>
                 </ModelVisual3D.Content>
             </ModelVisual3D>
         </Viewport3D>
+        
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="X" />

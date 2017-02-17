@@ -3,14 +3,13 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using PointManager.Commands;
 using PointManager.Models;
 
 namespace PointManager.ViewModels
 {
     public class World3DViewModel : ViewModelBase
     {
-        public enum MoveMent
+        private enum MoveMent
         {
             Negative = -1, None = 0, Positive = 1,
         }
@@ -18,11 +17,10 @@ namespace PointManager.ViewModels
 
         private Camera _cameraPostition;
         private const double Steps = 1;
-        public MoveMent Walk, Strafe;
-        private PerspectiveCamera _newPerspectivCamera = new PerspectiveCamera();
+        private MoveMent _walk, _strafe;
+        private readonly PerspectiveCamera _newPerspectivCamera = new PerspectiveCamera();
         private System.Windows.Threading.DispatcherTimer _timer;
 
-       
         public World3DModel World3DModel { get; set; }
 
 
@@ -42,8 +40,8 @@ namespace PointManager.ViewModels
         private void CreateModel3DGroup()
         {
             World3DModel.Model3DGroup = new Model3DGroup();
-            World3DModel.Model3DGroup.Children.Add(new AmbientLight() {Color = Color.FromRgb(128, 128, 128)});
-            World3DModel.Model3DGroup.Children.Add(new DirectionalLight()
+            World3DModel.Model3DGroup.Children.Add(new AmbientLight{Color = Color.FromRgb(128, 128, 128)});
+            World3DModel.Model3DGroup.Children.Add(new DirectionalLight
             {
                 Color = Color.FromRgb(128, 128, 128),
                 Direction = new Vector3D(-1.0, 0, 1.0)
@@ -70,10 +68,10 @@ namespace PointManager.ViewModels
         {
             switch (e.Key)
             {
-                case Key.Up: Walk = MoveMent.Positive; break;
-                case Key.Down: Walk = MoveMent.Negative; break;
-                case Key.Left: Strafe = MoveMent.Negative; break;
-                case Key.Right: Strafe = MoveMent.Positive; break;
+                case Key.Up: _walk = MoveMent.Positive; break;
+                case Key.Down: _walk = MoveMent.Negative; break;
+                case Key.Left: _strafe = MoveMent.Negative; break;
+                case Key.Right: _strafe = MoveMent.Positive; break;
                 case Key.Z: _cameraPostition.Y += 0.1; break;
                 case Key.X: _cameraPostition.Y -= 0.1; break;
             }
@@ -83,17 +81,17 @@ namespace PointManager.ViewModels
         {
             switch (e.Key)
             {
-                case Key.Up: Walk = MoveMent.None; break;
-                case Key.Down: Walk = Walk = MoveMent.None; break;
-                case Key.Left: Strafe = MoveMent.None; break;
-                case Key.Right: Strafe = MoveMent.None; break;
+                case Key.Up: _walk = MoveMent.None; break;
+                case Key.Down: _walk = _walk = MoveMent.None; break;
+                case Key.Left: _strafe = MoveMent.None; break;
+                case Key.Right: _strafe = MoveMent.None; break;
             }
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (Walk != MoveMent.None) _cameraPostition.Move((double)Walk * Steps * 0.1);
-            if (Strafe != MoveMent.None) _cameraPostition.Strafe((double)Strafe * Steps * 0.1);
+            if (_walk != MoveMent.None) _cameraPostition.Move((double)_walk * Steps * 0.1);
+            if (_strafe != MoveMent.None) _cameraPostition.Strafe((double)_strafe * Steps * 0.1);
             _newPerspectivCamera.Position = _cameraPostition.Position;
             _newPerspectivCamera.LookDirection = new Vector3D(_cameraPostition.Look.X, _cameraPostition.Look.Y, _cameraPostition.Look.Z);
             PrintCameraData();

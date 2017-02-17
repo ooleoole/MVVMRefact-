@@ -8,7 +8,6 @@
         WindowState="Maximized">
     <Window.Resources>
         <viewmodels:MainViewModel x:Key="MVM" />
-      <viewmodels:World3DViewModel x:Key="World3DViewModel"/>
     </Window.Resources>
     
     <StackPanel x:Name="LayoutRoot" DataContext="{StaticResource MVM}" MinHeight="300" MinWidth="300" >
