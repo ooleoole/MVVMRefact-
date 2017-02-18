@@ -17,10 +17,7 @@ namespace PointManager.Models
 
         public Model3DGroup Model3DGroup
         {
-            get
-            {
-                return _model3DGroup;
-            }
+            get { return _model3DGroup; }
             set
             {
                 if (_model3DGroup != value)
@@ -34,10 +31,7 @@ namespace PointManager.Models
 
         public PerspectiveCamera Camera
         {
-            get
-            {
-                return _camera;
-            }
+            get { return _camera; }
             set
             {
                 if (_camera != value)
@@ -50,11 +44,7 @@ namespace PointManager.Models
 
         public double ActualWorldHeight
         {
-            get
-            {
-                return _actualWorldHeight;
-
-            }
+            get { return _actualWorldHeight; }
             set
             {
                 if (_actualWorldHeight != value)
@@ -132,10 +122,7 @@ namespace PointManager.Models
 
         public string HCameraDirection
         {
-            get
-            {
-                return _hCameraDirection;
-            }
+            get { return _hCameraDirection; }
             set
             {
                 if (_hCameraDirection != value)
